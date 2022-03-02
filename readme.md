@@ -37,3 +37,7 @@ python v2_run.py
 ## proceso
 
 ambos recorren la carpeta img_demo y dejan las salidas en output
+
+## to-do
+
+* dejar el json de tamaño por fuera del script
