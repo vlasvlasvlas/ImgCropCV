@@ -54,6 +54,6 @@ ambos recorren la carpeta img_demo y dejan las salidas en output
 
 * dejar el json de tamaño por fuera del script.
 
-* probar con mas casos
+* probar con más fotos (se realizaron pruebas con stock de 20 fotos con buenos resultados).
 
-* sumar un py unit-test de las fn()
+* sumar un py unit-test.
