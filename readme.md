@@ -34,7 +34,7 @@ Usar venv para entorno virtual python:
 
 ## ejecución
 
-### Version 1
+### Versión 1
 
 Se ejecutan las lineas por foto:
 
@@ -42,7 +42,7 @@ python v1_run.py
 
 **Se obtuvieron mejores resultados con version 1**
 
-### Version 2
+### Versión 2
 
 python v2_run.py
 
