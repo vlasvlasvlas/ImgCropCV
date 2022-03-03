@@ -1,5 +1,5 @@
 
-# Script para generación y crop de imágenes con formatos preestablecidos (alta, media, baja)
+# Script para generación y crop de imágenes con formatos preestablecidos (alta, media, baja) con criterios de modelo OpenCV
 
 
 ## Motivación
