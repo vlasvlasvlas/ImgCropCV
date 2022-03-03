@@ -57,3 +57,6 @@ ambos recorren la carpeta img_demo y dejan las salidas en output
 * probar con más fotos (se realizaron pruebas con stock de 20 fotos con buenos resultados).
 
 * sumar un py unit-test.
+
+* Poder clasificar "buenas fotos" de obra vs "malas fotos de obra", dandole así un peso de publicación a la foto.
+
