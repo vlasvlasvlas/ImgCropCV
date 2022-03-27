@@ -46,5 +46,6 @@ for file in glob.glob("*.jpg"):
         print(width)
         print(height)
 
-        proc = subprocess.run("smartcroppy --width {width} --height {height} {file}.jpg ../output/{file}{size}.jpg".format(width=width,height=height,size=size,file=file))
+        proc = subprocess.run("smartcroppy --width {width} --height {height} --debug-file ../output/{file}_debug.jpg  {file}.jpg ../output/{file}{size}.jpg".format(width=width,height=height,size=size,file=file))
+        print("smartcroppy --width {width} --height {height} --debug-file ../output/{file}_debug.jpg  {file}.jpg ../output/{file}{size}.jpg".format(width=width,height=height,size=size,file=file))
         print(proc)
