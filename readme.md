@@ -32,7 +32,7 @@ Usar venv para entorno virtual python:
 
 - Copiar las fotos necesarias en una carpeta del proyecto
 - Declarar carpetas de entrada salida y extensión de imagenes en el archivo config.json
-- Ejecutar: python v1_run.py
+- Ejecutar: python run.py
 
 ## proceso
 
