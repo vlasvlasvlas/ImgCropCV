@@ -1,5 +1,7 @@
 
-# Script para generación y crop de imágenes con formatos preestablecidos (alta, media, baja) con criterios de modelo OpenCV
+# ImgCropCV
+
+Script para crop de imágenes con formatos preestablecidos usando criterios de corte de OpenCV.
 
 
 ## Motivación
