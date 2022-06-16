@@ -1,0 +1,21 @@
+{
+    "formatos":{
+        "_XL":{
+            "width" :"1440",
+            "height":"1080"
+        },
+        "_MD":{
+            "width" :"632",
+            "height":"474"
+        },
+        "_SM":{
+            "width" :"260",
+            "height":"195"
+        }
+    },
+    "archivos":{
+        "carpeta_in":"imgs_demo",
+        "carpeta_out":"output",
+        "extension":".jpg"
+    }
+}

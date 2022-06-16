@@ -6,26 +6,28 @@ import sys
 import json
   
 #formatos
-f = open('formatos.json')
+f = open('config.json')
 fload  = json.load(f)
-formatos = list(fload.items())
+formatos = list(fload['formatos'].items())
+print(formatos[1][0])
 
 #params
-imgfolder_in = "imgs_demo"
-imgfolder_out = 'output'
-extension = '.jpg'
+archivos = list(fload['archivos'].items())
+carpeta_in = archivos[0][1]
+carpeta_out = archivos[1][1]
+extension = archivos[2][1]
 
 # changedir
-path_in  = os.path.dirname(__file__)+imgfolder_in
-path_out = os.path.dirname(__file__)+imgfolder_out
-
+path_in  = os.path.dirname(__file__)+carpeta_in
+path_out = os.path.dirname(__file__)+carpeta_out
 os.chdir(path_in)
 
 # smartcrop
 for file in glob.glob("*"+extension):
-    
-    if not os.path.isfile('../{imgfolder_out}/{filecheck}'.format(imgfolder_out=imgfolder_out,filecheck=file.replace(extension,formatos[0][0]+extension))):
 
+
+    # solo procesa imagenes nuevas
+    if not os.path.isfile('../{imgfolder_out}/{filecheck}'.format(imgfolder_out=carpeta_out,filecheck=file.replace(extension,formatos[0][0]+extension))):
         print("Procesando: "+file)
         for form in formatos:
             size= form[0]
@@ -36,7 +38,7 @@ for file in glob.glob("*"+extension):
                 if key == 'height':
                     height = value            
             ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-            proc = subprocess.run("python "+ROOT_DIR+ "/../venv/lib/site-packages/smartcrop/__init__.py -W {width} -H {height} -i {file} -o ../{imgfolder_out}/{file}{size}{extension}".format(width=width,height=height,size=size,file=file,extension=extension,imgfolder_out=imgfolder_out))
+            proc = subprocess.run("python "+ROOT_DIR+ "/../venv/lib/site-packages/smartcrop/__init__.py -W {width} -H {height} -i {filein} -o ../{imgfolder_out}/{fileout}{size}{extension}".format(width=width,height=height,size=size,filein=file,fileout=file.replace(extension,''),extension=extension,imgfolder_out=carpeta_out))
             print(proc)
     else:
         print(file+" ya fue procesado")

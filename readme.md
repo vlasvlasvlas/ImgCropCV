@@ -17,20 +17,25 @@ Se realizaron pruebas con ambas librerías, obteniendo mejores resultados con la
 
 ### Versión 1 
 
+Utiliza: 
+
 * Open CV https://pypi.org/project/opencv-python/ (pip install opencv-python)
 * Smartcrop https://github.com/epixelic/python-smart-crop (pip install git+https://github.com/epixelic/python-smart-crop)
 
 
 ### Versión 2 
 
+Utiliza:
+
 * Smartcroppy https://github.com/smartcrop/smartcrop.py (pip install -e git+git://github.com/hhatto/smartcrop.py.git@master#egg=smartcrop)
 
 
-## Entorno
+## Instalación de entorno y librerías
 
 Usar venv para entorno virtual python:
 - python -m venv venv
 - source venv/scripts/activate
+- pip install -r requirements.txt
 
 ## ejecución
 
