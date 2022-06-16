@@ -45,3 +45,18 @@ Usar venv para entorno virtual python:
 * sumar un py unit-test.
 
 * Poder clasificar "buenas fotos" de obra vs "malas fotos de obra", dandole así un peso de publicación a la foto.
+
+* Ajustar criterios de clasificación. Hoy día se utilizan los siguientes parámetros:
+
+```txt
+# ..\venv\Lib\site-packages\smartcrop\__init__.py:
+
+# Algorithm parameters
+COMBINE_FACE_WEIGHT = 10
+COMBINE_FEATURE_WEIGHT = 10
+FEATURE_DETECT_MAX_CORNERS = 50
+FEATURE_DETECT_QUALITY_LEVEL = 0.1
+FEATURE_DETECT_MIN_DISTANCE = 10
+FACE_DETECT_REJECT_LEVELS = 1.3
+FACE_DETECT_LEVEL_WEIGHTS = 5
+```
