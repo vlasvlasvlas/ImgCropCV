@@ -8,10 +8,9 @@ Para plataformas que se necesite tener imágenes en múltiples formatos (alta, m
 
 La idea de este pequeño proyecto es poder automatizar el corte de fotos con algún criterio de detección de objetos o valoración de los objetos para la zona de corte.
 
-Para esto se encontraron 2 librerías y estos scripts simplemente automatizan la ejecución de dichas librerías.
+Para esto se encontró una librería (Smartcrop), la cual es utilizada por el presente script para automatizar la ejecución sobre archivos en carpetas.
 
-Se realizaron pruebas con ambas librerías, obteniendo mejores resultados con la versión 1 del script publicado en dicho repo.
-
+Si bien se realizaron pruebas con otras librerías con Smartcrop fue con la que mejores resultados se obtuvieron.
 
 ## Requerimientos
 
