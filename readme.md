@@ -18,7 +18,7 @@ Utiliza:
 
 * Open CV https://pypi.org/project/opencv-python/ (pip install opencv-python)
 * Smartcrop https://github.com/epixelic/python-smart-crop (pip install git+https://github.com/epixelic/python-smart-crop)
-
+* Algóritmo de Feature Detection: https://github.com/thumbor/thumbor/wiki/Detection-algorithms
 
 ## Instalación de entorno y librerías
 
