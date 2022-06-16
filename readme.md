@@ -59,6 +59,13 @@ Librerías:
 
 * Ajustar criterios de clasificación. Hoy día se utilizan los siguientes parámetros:
 
+* reemplazar caracaters raros en nombres de archivos  outputs
+
+* sumar tinypng para reduccion de imgs outputs
+
+* trabajar con subdirectorios 
+
+
 ```txt
 # ..\venv\Lib\site-packages\smartcrop\__init__.py:
 
