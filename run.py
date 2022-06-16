@@ -32,7 +32,6 @@ def corta(file):
 f = open('config.json')
 fload  = json.load(f)
 formatos = list(fload['formatos'].items())
-print(formatos[1][0])
 
 #params
 archivos = list(fload['archivos'].items())
@@ -44,6 +43,7 @@ extension = archivos[2][1]
 path_in  = os.path.dirname(__file__)+carpeta_in
 path_out = os.path.dirname(__file__)+carpeta_out
 os.chdir(path_in)
+
 
 for file in glob.glob("*"+extension):
     corta(file)

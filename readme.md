@@ -35,7 +35,8 @@ Con Python ya instalado, es necesario usar un entorno virtual Venv para la insta
 
 - Copiar las fotos necesarias en una carpeta del proyecto
 - Declarar carpetas de entrada salida y extensión de imagenes en el archivo config.json
-- Ejecutar: python run.py
+- Ejecutar con python: python run.py 
+- Ejecutar con .bat (Windows): run.bat
 
 ## proceso
 
