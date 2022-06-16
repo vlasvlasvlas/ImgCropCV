@@ -36,7 +36,10 @@ Usar venv para entorno virtual python:
 
 ## proceso
 
-ambos recorren la carpeta declarar en config.json como carpeta_in y deja la salidas en el declarado como carpeta_out.
+- Se itera sobre la carpeta declarada en config.json como carpeta_in
+- Se transforma cada imágen utilizando criterios de corte de opencv
+- Se Cambia el tamaño utilizando las medidas de formatos XL, MD y SM del config.json
+- Se deja la salida en la carpeta declarada en config.json como carpeta_out
 
 ## to-do
 
