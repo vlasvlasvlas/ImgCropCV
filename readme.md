@@ -23,7 +23,8 @@ Utiliza:
 
 ## Instalación de entorno y librerías
 
-Usar venv para entorno virtual python:
+Con Python ya instalado, es necesario usar un entorno virtual Venv para la instalación de las dependencias o librerias:
+
 - python -m venv venv
 - source venv/scripts/activate
 - pip install -r requirements.txt
