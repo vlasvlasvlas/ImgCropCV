@@ -15,19 +15,10 @@ Se realizaron pruebas con ambas librerías, obteniendo mejores resultados con la
 
 ## Requerimientos
 
-### Versión 1 
-
 Utiliza: 
 
 * Open CV https://pypi.org/project/opencv-python/ (pip install opencv-python)
 * Smartcrop https://github.com/epixelic/python-smart-crop (pip install git+https://github.com/epixelic/python-smart-crop)
-
-
-### Versión 2 
-
-Utiliza:
-
-* Smartcroppy https://github.com/smartcrop/smartcrop.py (pip install -e git+git://github.com/hhatto/smartcrop.py.git@master#egg=smartcrop)
 
 
 ## Instalación de entorno y librerías
@@ -39,29 +30,16 @@ Usar venv para entorno virtual python:
 
 ## ejecución
 
-### Versión 1
-
-Se ejecutan las lineas por foto:
-
-python v1_run.py
-
-**Se obtuvieron mejores resultados con version 1**
-
-### Versión 2
-
-python v2_run.py
+- Copiar las fotos necesarias en una carpeta del proyecto
+- Declarar carpetas de entrada salida y extensión de imagenes en el archivo config.json
+- Ejecutar: python v1_run.py
 
 ## proceso
 
-ambos recorren la carpeta img_demo y dejan las salidas en output
+ambos recorren la carpeta declarar en config.json como carpeta_in y deja la salidas en el declarado como carpeta_out.
 
 ## to-do
-
-* dejar el json de tamaño por fuera del script.
-
-* probar con más fotos (se realizaron pruebas con stock de 20 fotos con buenos resultados).
 
 * sumar un py unit-test.
 
 * Poder clasificar "buenas fotos" de obra vs "malas fotos de obra", dandole así un peso de publicación a la foto.
-
