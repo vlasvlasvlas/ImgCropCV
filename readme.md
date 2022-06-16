@@ -14,7 +14,7 @@ Para esto se encontró una librería (Smartcrop), la cual es utilizada por el pr
 
 Si bien se realizaron pruebas con otras librerías con Smartcrop fue con la que mejores resultados se obtuvieron.
 
-## Requerimientos
+## Requerimientos, instalación de entorno y librerías.
 
 Utiliza: 
 
@@ -27,9 +27,15 @@ Utiliza:
 
 Con Python ya instalado, es necesario usar un entorno virtual Venv para la instalación de las dependencias o librerias:
 
+Entorno:
+
 - python -m venv venv
 - source venv/scripts/activate
-- pip install -r requirements.txt
+
+Librerías:
+
+- pip install opencv-python
+- pip install git+https://github.com/epixelic/python-smart-crop
 
 ## ejecución
 

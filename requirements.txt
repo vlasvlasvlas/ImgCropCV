@@ -1,3 +1,0 @@
-numpy==1.22.4
-opencv-python==4.6.0.66
-smartcrop==0.4
