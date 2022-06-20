@@ -18,7 +18,7 @@ Si bien se realizaron pruebas con otras librerías con Smartcrop fue con la que 
 
 Utiliza: 
 
-* Python 3.6+ https://www.python.org/downloads/ (desde Windows: al instalar, elegir que se agregue al PATH para no tener problemas de llamar el ejecutable)
+* Python 3.6+ https://www.python.org/downloads/ (desde Windows, elegir que se agregue al PATH para no tener problemas de llamar al ejecutable)
 * Open CV https://pypi.org/project/opencv-python/ (pip install opencv-python)
 * Smartcrop https://github.com/epixelic/python-smart-crop (pip install git+https://github.com/epixelic/python-smart-crop)
 * Algóritmo de Feature Detection: https://github.com/thumbor/thumbor/wiki/Detection-algorithms
