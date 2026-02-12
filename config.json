@@ -1,21 +1,36 @@
 {
-    "formatos":{
-        "_XL":{
-            "width" :"1440",
-            "height":"1080"
+    "formatos": {
+        "_XL": {
+            "width": "1440",
+            "height": "1080"
         },
-        "_MD":{
-            "width" :"632",
-            "height":"474"
+        "_MD": {
+            "width": "632",
+            "height": "474"
         },
-        "_SM":{
-            "width" :"260",
-            "height":"195"
+        "_SM": {
+            "width": "260",
+            "height": "195"
         }
     },
-    "archivos":{
-        "carpeta_in":"imgs_demo",
-        "carpeta_out":"output",
-        "extension":".jpg"
+    "archivos": {
+        "carpeta_in": "input",
+        "carpeta_out": "output"
+    },
+    "detection": {
+        "prompts": [
+            "building",
+            "construction",
+            "person",
+            "worker",
+            "crane",
+            "machinery",
+            "sign",
+            "road",
+            "house",
+            "truck"
+        ],
+        "model": "yolov8s-worldv2",
+        "confidence_threshold": 0.15
     }
 }

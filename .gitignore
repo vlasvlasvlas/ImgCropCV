@@ -1,0 +1,25 @@
+# Carpetas de imágenes
+input/*
+output/*
+
+# Mantener las carpetas pero no su contenido
+!input/.gitkeep
+!output/.gitkeep
+
+# Entorno virtual
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# YOLO model weights (se descargan automáticamente)
+*.pt
+
+# Logs
+history.log
+
+# OS
+.DS_Store
+Thumbs.db
