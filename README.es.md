@@ -189,6 +189,7 @@ Editar `config.json`:
 
 ```json
 {
+    "language": "en",
     "formatos": {
         "_XL": { "width": "1440", "height": "1080" },
         "_MD": { "width": "632",  "height": "474"  },
@@ -206,6 +207,12 @@ Editar `config.json`:
     }
 }
 ```
+
+### `language`
+
+Define el idioma de la interfaz del menú y los logs.
+- `"en"`: Inglés (por defecto)
+- `"es"`: Español
 
 ### Sección `formatos`
 

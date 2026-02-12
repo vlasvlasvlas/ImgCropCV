@@ -189,6 +189,7 @@ Edit `config.json`:
 
 ```json
 {
+    "language": "en",
     "formatos": {
         "_XL": { "width": "1440", "height": "1080" },
         "_MD": { "width": "632",  "height": "474"  },
@@ -206,6 +207,12 @@ Edit `config.json`:
     }
 }
 ```
+
+### `language`
+
+Defines the interface language.
+- `"en"`: English (default)
+- `"es"`: Spanish
 
 ### `formatos` section
 
