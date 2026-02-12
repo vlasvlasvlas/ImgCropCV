@@ -272,10 +272,27 @@ ImgCropCV/
 ```
 
 
-## To-Do
+## Modelo de detección: YOLO-World
 
-- [ ] Sumar unit tests
-- [ ] Clasificar "buenas fotos" vs "malas fotos" de obra, asignando peso de publicación
-- [ ] Integrar TinyPNG o compresión avanzada para reducir tamaño de outputs
-- [ ] Trabajar con subdirectorios de forma recursiva
-- [ ] Interfaz web simple para subir y procesar fotos desde el navegador
+El recorte inteligente usa **YOLO-World**, un modelo de detección de objetos en tiempo real con vocabulario abierto (zero-shot), desarrollado por **Tencent AI Lab** y publicado en **CVPR 2024**.
+
+| Dato | Detalle |
+|------|---------|
+| **Modelo usado** | `yolov8s-worldv2` (variante Small, v2) |
+| **Peso del modelo** | ~25 MB (se descarga automáticamente en la primera ejecución) |
+| **Capacidad** | Detecta objetos a partir de descripciones de texto, sin necesidad de entrenamiento |
+| **Arquitectura** | Basado en YOLOv8 + encoder de texto CLIP |
+| **Paper** | [YOLO-World: Real-Time Open-Vocabulary Object Detection](https://arxiv.org/abs/2401.17270) (arXiv, 2024) |
+| **Autores** | Tianheng Cheng, Lin Song, Yixiao Ge, Wenyu Liu, Xinggang Wang, Ying Shan |
+| **Código fuente** | [AILab-CVC/YOLO-World](https://github.com/AILab-CVC/YOLO-World) (GitHub) |
+| **Integración** | [Ultralytics YOLO-World](https://docs.ultralytics.com/models/yolo-world/) (documentación) |
+
+
+## Licencias
+
+| Componente | Licencia | Nota |
+|-----------|---------|------|
+| **YOLO-World** (modelo) | [GPL-3.0](https://github.com/AILab-CVC/YOLO-World/blob/master/LICENSE) | Permite uso comercial; obras derivadas deben mantener la misma licencia |
+| **Ultralytics** (framework) | [AGPL-3.0](https://github.com/ultralytics/ultralytics/blob/main/LICENSE) | Requiere open-source del proyecto completo, o licencia comercial |
+| **OpenCV** | [Apache 2.0](https://github.com/opencv/opencv/blob/master/LICENSE) | Uso libre, comercial y no comercial |
+| **Pillow** | [HPND](https://github.com/python-pillow/Pillow/blob/main/LICENSE) | Permisiva, similar a MIT |
