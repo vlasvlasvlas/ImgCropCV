@@ -180,8 +180,13 @@ def saliency_focal_point(image_path: str) -> FocalPoint:
     h, w = img.shape[:2]
 
     # Usar saliency spectral residual de OpenCV
-    saliency = cv2.saliency.StaticSaliencySpectralResidual_create()
-    success, saliency_map = saliency.computeSaliency(img)
+    try:
+        saliency = cv2.saliency.StaticSaliencySpectralResidual_create()
+        success, saliency_map = saliency.computeSaliency(img)
+    except AttributeError:
+        # Fallback si no está instalado opencv-contrib-python
+        logger.warning("  Módulo 'cv2.saliency' no encontrado. Instalar 'opencv-contrib-python'. Usando centro.")
+        return FocalPoint(x=0.5, y=0.5, confidence=0.0, method="center")
 
     if not success or saliency_map is None:
         logger.warning("  Saliency map falló, usando centro.")
