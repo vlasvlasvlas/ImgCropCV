@@ -238,10 +238,17 @@ Define los tamaños de salida. Cada entrada genera un archivo con el sufijo corr
 El script acepta **cualquier formato de imagen que Pillow pueda abrir**, incluyendo: JPEG, PNG, WEBP, BMP, TIFF, GIF, ICO, y más. No es necesario convertir las fotos antes de procesarlas.
 
 
+## Logs y Registro
+
+El script crea automáticamente una carpeta `logs/` y guarda un archivo de log diario (ej: `log_2024-05-20.txt`).
+Estos registros contienen información detallada sobre las operaciones, procesamientos exitosos, errores y marcas de tiempo, útil para auditoría o depuración de procesos por lotes.
+
+
 ## Estructura del proyecto
 
 ```
 ImgCropCV/
+├── logs/               # ← Logs diarios de ejecución
 ├── run.py              # Script principal con menú interactivo y CLI
 ├── smart_crop.py       # Módulo de detección YOLO-World + saliency + crop
 ├── config.json         # Configuración de formatos, carpetas y detección

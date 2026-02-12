@@ -22,6 +22,7 @@ import logging
 import re
 import sys
 import time
+from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -38,6 +39,30 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
+
+def setup_file_logging(base_dir: Path):
+    """Configura el logging a archivo en la carpeta logs/."""
+    log_dir = base_dir / "logs"
+    log_dir.mkdir(exist_ok=True)
+    
+    # Log file name with date: logs/log_YYYY-MM-DD.log
+    log_file = log_dir / f"log_{datetime.now().strftime('%Y-%m-%d')}.txt"
+    
+    file_handler = logging.FileHandler(log_file, encoding='utf-8')
+    file_handler.setLevel(logging.INFO)
+    
+    # Formato más detallado para el archivo (incluye fecha completa)
+    formatter = logging.Formatter(
+        "%(asctime)s │ %(levelname)-7s │ %(message)s", 
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+    file_handler.setFormatter(formatter)
+    
+    # Evitar duplicar handlers si se llama varias veces
+    if not any(isinstance(h, logging.FileHandler) for h in logger.handlers):
+        logger.addHandler(file_handler)
+        logger.info(f"Logging to file: {log_file}")
+
 
 
 # ── Utilidades ────────────────────────────────────────────────────────
@@ -455,6 +480,9 @@ def main():
     # ── Cargar config ──
     # base_dir already defined
     config = load_config(str(base_dir / args.config))
+
+    # Setup file logging
+    setup_file_logging(base_dir)
 
     # Set language from config
     if "language" in config:
