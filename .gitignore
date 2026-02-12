@@ -19,6 +19,9 @@ __pycache__/
 
 # Logs
 history.log
+logs/*
+logs/
+logs/log*
 
 # OS
 .DS_Store
