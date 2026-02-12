@@ -15,6 +15,8 @@ import cv2
 import numpy as np
 from PIL import Image
 
+import i18n
+
 logger = logging.getLogger(__name__)
 
 
@@ -61,10 +63,10 @@ def _get_model(model_name: str = "yolov8s-worldv2"):
     global _model, _model_name
     if _model is None or _model_name != model_name:
         from ultralytics import YOLO
-        logger.info(f"Cargando modelo {model_name}...")
+        logger.info(i18n.t("loading_model", model_name))
         _model = YOLO(model_name)
         _model_name = model_name
-        logger.info("Modelo cargado.")
+        logger.info(i18n.t("model_loaded"))
     return _model
 
 

@@ -27,6 +27,7 @@ from pathlib import Path
 
 from PIL import Image as PILImage
 
+import i18n
 from smart_crop import compute_focal_point, smart_crop
 
 # ── Logging ───────────────────────────────────────────────────────────
@@ -52,7 +53,7 @@ def load_config(config_path: str) -> dict:
     """Carga y valida la configuración."""
     path = Path(config_path)
     if not path.exists():
-        logger.error(f"Config no encontrado: {config_path}")
+        logger.error(i18n.t("config_not_found", config_path))
         sys.exit(1)
 
     with open(path, encoding="utf-8") as f:
@@ -107,11 +108,11 @@ def get_image_status(image: Path, output_dir: Path, formats: dict) -> str:
             missing.append(suffix)
 
     if not missing:
-        return "✓ procesada"
+        return i18n.t("status_processed")
     elif not existing:
-        return "○ pendiente"
+        return i18n.t("status_pending")
     else:
-        return f"◐ parcial ({', '.join(existing)})"
+        return i18n.t("status_partial", ', '.join(existing))
 
 
 def is_already_processed(image: Path, output_dir: Path, formats: dict) -> bool:
@@ -135,6 +136,25 @@ def get_file_size_str(path: Path) -> str:
         return f"{size / (1024 * 1024):.1f} MB"
 
 
+def save_config_language(config_path: str, lang: str):
+    """Guarda el idioma seleccionado en el config.json."""
+    from pathlib import Path
+    path = Path(config_path)
+    if not path.exists():
+        return
+    
+    try:
+        with open(path, 'r', encoding="utf-8") as f:
+            config = json.load(f)
+        
+        config['language'] = lang
+        
+        with open(path, 'w', encoding="utf-8") as f:
+            json.dump(config, f, indent=4, ensure_ascii=False)
+    except Exception as e:
+        logger.error(f"Failed to save config: {e}")
+
+
 # ── Menú interactivo ─────────────────────────────────────────────────
 
 def show_menu(
@@ -143,6 +163,7 @@ def show_menu(
     formats: dict,
     detection: dict,
     input_dir: Path,
+    config_path: str,
 ) -> tuple[list[Path], bool]:
     """
     Muestra menú interactivo con listado de archivos y opciones.
@@ -153,13 +174,13 @@ def show_menu(
     while True:
         print()
         print("=" * 65)
-        print("  ImgCropCV — Smart Crop con YOLO-World")
+        print(f"  {i18n.t('menu_header')}")
         print("=" * 65)
-        print(f"  Input:  {input_dir}")
-        print(f"  Output: {output_dir}")
+        print(f"  {i18n.t('menu_input', input_dir)}")
+        print(f"  {i18n.t('menu_output', output_dir)}")
         fmt_str = ", ".join(f"{k} ({v['width']}×{v['height']})" for k, v in formats.items())
-        print(f"  Formatos: {fmt_str}")
-        print(f"  Prompts: {', '.join(detection['prompts'][:5])}...")
+        print(f"  {i18n.t('menu_formats', fmt_str)}")
+        print(f"  {i18n.t('menu_prompts', ', '.join(detection['prompts'][:5]))}")
         print("-" * 65)
         print()
 
@@ -179,7 +200,7 @@ def show_menu(
                 pending.append(img)
 
         # Listar archivos con estado
-        print(f"  {'#':>3}  {'Archivo':<35} {'Tamaño':>8}  Estado")
+        print(f"{i18n.t('file_header')}")
         print(f"  {'─'*3}  {'─'*35} {'─'*8}  {'─'*15}")
 
         for i, img in enumerate(images, 1):
@@ -191,30 +212,40 @@ def show_menu(
             print(f"  {i:>3}  {name:<35} {size:>8}  {status}")
 
         print()
-        print(f"  Total: {len(images)} imágenes")
-        print(f"  ├─ {len(pending)} pendientes")
-        print(f"  ├─ {len(partial)} parciales")
-        print(f"  └─ {len(processed)} ya procesadas")
+        print(f"  {i18n.t('total_images', len(images))}")
+        print(f"  {i18n.t('total_pending', len(pending))}")
+        print(f"  {i18n.t('total_partial', len(partial))}")
+        print(f"  {i18n.t('total_processed', len(processed))}")
         print()
 
         # Opciones del menú
-        print("  ─── Opciones ───")
+        print(f"  {i18n.t('menu_options')}")
         if pending or partial:
-            print(f"  [P] Procesar pendientes ({len(pending) + len(partial)} imágenes)")
-        print(f"  [T] Procesar TODAS ({len(images)} imágenes, incluso ya procesadas)")
-        print("  [L] Listar archivos en output")
-        print("  [Q] Salir")
+            print(f"  {i18n.t('option_process_pending', len(pending) + len(partial))}")
+        print(f"  {i18n.t('option_process_all', len(images))}")
+        print(f"  {i18n.t('option_list_output')}")
+        print(f"  {i18n.t('option_switch_language')}")
+        print(f"  {i18n.t('option_quit')}")
         print()
 
-        choice = input("  Elegir opción: ").strip().upper()
+        choice = input(f"  {i18n.t('input_choice')}").strip().upper()
 
         if choice == "Q":
-            print("\n  Hasta luego.\n")
+            print(i18n.t('goodbye'))
             sys.exit(0)
 
         elif choice == "L":
             _show_output_listing(output_dir, formats)
-            input("\n  Presionar Enter para volver al menú...")
+            input(i18n.t('press_enter'))
+            continue
+
+        elif choice == "S":
+            current = i18n.get_language()
+            new_lang = "es" if current == "en" else "en"
+            i18n.set_language(new_lang)
+            save_config_language(config_path, new_lang)
+            print(f"\n  OK -> {new_lang.upper()}")
+            time.sleep(0.5)
             continue
 
         elif choice == "P" and (pending or partial):
@@ -224,23 +255,23 @@ def show_menu(
             return images, True
 
         else:
-            print("\n  ⚠ Opción no válida, intentar de nuevo.")
+            print(i18n.t('invalid_option'))
             time.sleep(0.5)
 
 
 def _show_output_listing(output_dir: Path, formats: dict):
     """Lista archivos en la carpeta output."""
     print()
-    print(f"  ─── Contenido de {output_dir} ───")
+    print(f"  {i18n.t('output_content', output_dir)}")
     print()
 
     if not output_dir.exists():
-        print("  (carpeta no existe)")
+        print(f"  {i18n.t('folder_not_exist')}")
         return
 
     files = sorted(f for f in output_dir.iterdir() if f.is_file())
     if not files:
-        print("  (vacío)")
+        print(f"  {i18n.t('empty')}")
         return
 
     # Agrupar por imagen base
@@ -292,8 +323,7 @@ def process_image(
             confidence_threshold=detection_config["confidence_threshold"],
         )
         logger.info(
-            f"  Punto focal: ({focal.x:.2f}, {focal.y:.2f}) "
-            f"[{focal.method}, conf={focal.confidence:.2f}]"
+            i18n.t("focal_point", focal.x, focal.y, focal.method, focal.confidence)
         )
 
         stem = sanitize_filename(image_path.stem)
@@ -315,7 +345,7 @@ def process_image(
     except Exception as e:
         result["status"] = "error"
         result["error"] = str(e)
-        logger.error(f"  ERROR procesando {image_path.name}: {e}")
+        logger.error(i18n.t("error_processing", image_path.name, e))
 
     return result
 
@@ -355,72 +385,80 @@ def run_processing(
     errors = sum(1 for r in results if r["status"] == "error")
 
     logger.info("=" * 60)
-    logger.info(f"Completado en {elapsed:.1f}s")
-    logger.info(f"  ✓ Exitosas: {ok}")
+    logger.info(i18n.t("processing_complete", elapsed))
+    logger.info(i18n.t("success_count", ok))
     if errors:
-        logger.warning(f"  ✗ Errores:  {errors}")
+        logger.warning(i18n.t("error_count", errors))
         for r in results:
             if r["status"] == "error":
-                logger.warning(f"    • {r['file']}: {r['error']}")
+                logger.warning(i18n.t("error_detail", r['file'], r['error']))
     logger.info("=" * 60)
 
 
 # ── Main ──────────────────────────────────────────────────────────────
 
 def main():
+    # ── Init translations ──
+    base_dir = Path(__file__).parent
+    i18n.load_translations(base_dir / "locales.json")
+    
     parser = argparse.ArgumentParser(
-        description="ImgCropCV — Smart crop de imágenes para plataformas de gobierno.",
+        description=i18n.t("cli_description"),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         "--config", "-c",
         default="config.json",
-        help="Ruta al archivo de configuración (default: config.json)",
+        help=i18n.t("cli_help_config"),
     )
     parser.add_argument(
         "--input", "-i",
-        help="Carpeta de entrada (sobreescribe config.json)",
+        help=i18n.t("cli_help_input"),
     )
     parser.add_argument(
         "--output", "-o",
-        help="Carpeta de salida (sobreescribe config.json)",
+        help=i18n.t("cli_help_output"),
     )
     parser.add_argument(
         "--extension", "-e",
-        help="Filtrar por extensión (ej: .jpg). Si no se especifica, procesa todas.",
+        help=i18n.t("cli_help_extension"),
     )
     parser.add_argument(
         "--auto",
         action="store_true",
-        help="Procesar automáticamente sin menú interactivo.",
+        help=i18n.t("cli_help_auto"),
     )
     parser.add_argument(
         "--dry-run", "-n",
         action="store_true",
-        help="Solo muestra qué procesaría, sin ejecutar.",
+        help=i18n.t("cli_help_dry_run"),
     )
     parser.add_argument(
         "--force", "-f",
         action="store_true",
-        help="Reprocesar imágenes ya procesadas.",
+        help=i18n.t("cli_help_force"),
     )
     parser.add_argument(
         "--workers", "-w",
         type=int,
         default=1,
-        help="Número de workers para procesamiento paralelo (default: 1).",
+        help=i18n.t("cli_help_workers"),
     )
     parser.add_argument(
         "--quality", "-q",
         type=int,
         default=90,
-        help="Calidad JPEG de salida, 1-100 (default: 90).",
+        help=i18n.t("cli_help_quality"),
     )
     args = parser.parse_args()
 
     # ── Cargar config ──
-    base_dir = Path(__file__).parent
+    # base_dir already defined
     config = load_config(str(base_dir / args.config))
+
+    # Set language from config
+    if "language" in config:
+        i18n.set_language(config["language"])
 
     archivos = config.get("archivos", {})
     input_dir = Path(args.input) if args.input else base_dir / archivos.get("carpeta_in", "input")
@@ -432,7 +470,7 @@ def main():
 
     # ── Validaciones ──
     if not input_dir.exists():
-        logger.error(f"Carpeta de entrada no existe: {input_dir}")
+        logger.error(i18n.t("input_dir_not_found", input_dir))
         sys.exit(1)
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -440,13 +478,13 @@ def main():
     # ── Buscar imágenes ──
     all_images = find_images(input_dir, ext_filter)
     if not all_images:
-        logger.warning(f"No se encontraron imágenes en {input_dir}")
+        logger.warning(i18n.t("images_not_found", input_dir))
         sys.exit(0)
 
     # ── Modo interactivo (default) vs automático ──
     if not args.auto and not args.dry_run:
         # Menú interactivo
-        images_to_process, force = show_menu(all_images, output_dir, formats, detection, input_dir)
+        images_to_process, force = show_menu(all_images, output_dir, formats, detection, input_dir, str(base_dir / args.config))
 
         if not force:
             # Filtrar ya procesadas
@@ -456,7 +494,7 @@ def main():
             ]
 
         if not images_to_process:
-            logger.info("No hay imágenes pendientes para procesar.")
+            logger.info(i18n.t("no_pending_images"))
             sys.exit(0)
 
         print()
@@ -470,26 +508,26 @@ def main():
         pending = [img for img in images if not is_already_processed(img, output_dir, formats)]
         skipped = len(images) - len(pending)
         if skipped > 0:
-            logger.info(f"Salteando {skipped} imágenes ya procesadas (usar --force para reprocesar)")
+            logger.info(i18n.t("skipping_images", skipped))
         images = pending
 
     if not images:
-        logger.info("Todas las imágenes ya fueron procesadas.")
+        logger.info(i18n.t("all_processed"))
         sys.exit(0)
 
     # ── Resumen ──
     logger.info("=" * 60)
-    logger.info("ImgCropCV — Smart Crop con YOLO-World")
-    logger.info(f"  Input:    {input_dir} ({len(images)} imágenes)")
-    logger.info(f"  Output:   {output_dir}")
+    logger.info(i18n.t("header_title"))
+    logger.info(i18n.t("log_input_summary", input_dir, len(images)))
+    logger.info(f"  {i18n.t('menu_output', output_dir)}")
     fmt_str = ", ".join(f"{k} ({v['width']}×{v['height']})" for k, v in formats.items())
-    logger.info(f"  Formatos: {fmt_str}")
-    logger.info(f"  Modelo:   {detection['model']}")
-    logger.info(f"  Prompts:  {', '.join(detection['prompts'])}")
+    logger.info(f"  {i18n.t('menu_formats', fmt_str)}")
+    logger.info(i18n.t("log_model", detection['model']))
+    logger.info(i18n.t("log_prompts", ', '.join(detection['prompts'])))
     logger.info("=" * 60)
 
     if args.dry_run:
-        logger.info("DRY RUN — Archivos que se procesarían:")
+        logger.info(i18n.t("dry_run_header"))
         for img in images:
             logger.info(f"  • {img.name}")
         sys.exit(0)
