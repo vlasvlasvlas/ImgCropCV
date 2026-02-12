@@ -1,4 +1,6 @@
 
+> [🇬🇧 English](README.md) | 🇪🇸 **Español**
+
 # ImgCropCV
 
 Script para **crop inteligente** de imágenes usando detección de objetos con **YOLO-World** para plataformas de gobierno que requieren fotos en múltiples formatos.
@@ -239,7 +241,8 @@ ImgCropCV/
 ├── requirements.txt    # Dependencias Python
 ├── input/              # ← Colocar fotos originales acá
 ├── output/             # ← Fotos recortadas salen acá
-└── readme.md           # Esta documentación
+├── README.md           # Documentación en inglés
+└── README.es.md        # Documentación en español (este archivo)
 ```
 
 
